@@ -2,39 +2,11 @@
 <items version="2" >
 
     <item
-        jar="D:\workspace_android_studio\Exercise\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jar="C:\Users\SplinterCell-TP\.gradle\caches\modules-2\files-2.1\org.androidannotations\androidannotations-api\3.3.2\7d6149d856b880bbd676047aacb8446a758fbbdb\androidannotations-api-3.3.2.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="D:\workspace_android_studio\Exercise\app\build\intermediates\pre-dexed\debug\classes-7fdbb57a94a261a4e42f4bde748c7346a9c0b557.jar" />
-    </item>
-    <item
-        jar="C:\Users\SplinterCell-TP\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="D:\workspace_android_studio\Exercise\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-ae08d18fab8c3d0a7b5210290ed9e5fd42b3a734.jar" />
-    </item>
-    <item
-        jar="D:\workspace_android_studio\Exercise\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="D:\workspace_android_studio\Exercise\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-6fa87360ebc6ab65dbb3cfb305a56b38168ad7c4.jar" />
-    </item>
-    <item
-        jar="D:\workspace_android_studio\Exercise\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="D:\workspace_android_studio\Exercise\app\build\intermediates\pre-dexed\debug\classes-f9d53224a7a0949a72bd3858c31e49538960ff6b.jar" />
-    </item>
-    <item
-        jar="C:\Users\SplinterCell-TP\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="D:\workspace_android_studio\Exercise\app\build\intermediates\pre-dexed\debug\gson-2.3.1-41838919c26227a7947ace8c064eec205992f279.jar" />
+        sha1="7d6149d856b880bbd676047aacb8446a758fbbdb">
+        <dex dex="D:\workspace_android_studio\Exercise\app\build\intermediates\pre-dexed\debug\androidannotations-api-3.3.2-0ef526b298ae1cfad9b114ad6e7638eecede0885.jar" />
     </item>
 
 </items>
