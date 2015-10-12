@@ -1,20 +1,30 @@
 package com.fdpsm.exercise.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fdpsm.exercise.model.Movie;
+import com.fdpsm.exercise.MovieRestClient;
 import com.fdpsm.exercise.R;
-import com.fdpsm.exercise.tasks.MovieDetailTask;
-import com.fdpsm.exercise.tasks.TaskListener;
+import com.fdpsm.exercise.model.Movie;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.rest.RestService;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 @EFragment(R.layout.fragment_movie_detail)
-public class MovieDetailFragment extends Fragment implements TaskListener {
+public class MovieDetailFragment extends Fragment {
 
     @ViewById(R.id.title)
     TextView title;
@@ -28,6 +38,9 @@ public class MovieDetailFragment extends Fragment implements TaskListener {
     @ViewById(R.id.poster)
     ImageView poster;
 
+    @RestService
+    MovieRestClient restClient;
+
     public MovieDetailFragment() {
     }
 
@@ -35,16 +48,49 @@ public class MovieDetailFragment extends Fragment implements TaskListener {
     public void init()
     {
         String item = getArguments().getString("item");
-        System.out.println("Detailed Info for:" + item);
-        MovieDetailTask task = new MovieDetailTask(this);
-        task.execute(new String[]{item});
+        System.out.println("detailed info for:" + item);
+
+        this.getMovieDetailTask(item);
     }
 
-    @Override
-    public void onTaskCompleted(Movie movie) {
+    @Background
+    public void getMovieDetailTask(String item)
+    {
+        Movie movie = restClient.getMovieDetail(item);
+
+        if (movie != null) {
+            if (!movie.getPosterUrl().equalsIgnoreCase("N/A")) {
+                movie.setPoster(loadPoster(movie.getPosterUrl()));
+            }
+        }
+
+        updateUIDetail(movie);
+    }
+
+    @UiThread
+    public void updateUIDetail(Movie movie)
+    {
         title.setText(movie.getTitle());
         release.setText(movie.getReleaseDate());
         runtime.setText(movie.getRuntime());
         poster.setImageBitmap(movie.getPoster());
+    }
+
+    private Bitmap loadPoster(String posterURL) {
+
+        Bitmap bitmap = null;
+        URL url = null;
+
+        try {
+            url = new URL(posterURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            bitmap = BitmapFactory.decodeStream(con.getInputStream());
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 }

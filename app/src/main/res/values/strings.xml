@@ -13,6 +13,7 @@
 
     // error messages
     <string name="emptySearch">Please enter a Movie title!</string>
+    <string name="noResult">No result for that search!</string>
     <string name="shortSearch">Search must contain more than 1 character!</string>
 
     // fragment tags
