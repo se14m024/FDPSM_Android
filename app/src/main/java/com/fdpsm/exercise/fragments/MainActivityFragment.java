@@ -10,12 +10,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fdpsm.exercise.ExerciseApplication;
 import com.fdpsm.exercise.MovieRestClient;
 import com.fdpsm.exercise.R;
+import com.fdpsm.exercise.dao.DaoSession;
+import com.fdpsm.exercise.dao.MovieQuery;
+import com.fdpsm.exercise.dao.MovieQueryDao;
+import com.fdpsm.exercise.dao.MovieResult;
+import com.fdpsm.exercise.dao.MovieResultDao;
 import com.fdpsm.exercise.model.Search;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.EditorAction;
 import org.androidannotations.annotations.ItemClick;
@@ -24,6 +31,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 @EFragment(R.layout.fragment_main)
 public class MainActivityFragment extends Fragment {
@@ -92,9 +100,28 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    @Click(R.id.historyButton)
+    void historyButtonClicked() {
+
+        MovieQueryHistoryFragment_ fragment = (MovieQueryHistoryFragment_) getFragmentManager().findFragmentByTag(getString(R.string.fragment_tag_query_history));
+        if (fragment == null || !fragment.isInLayout()) {
+
+            MovieQueryHistoryFragment_ queryFragment = new MovieQueryHistoryFragment_();
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.addToBackStack(null);
+            ft.replace(R.id.container, queryFragment, getString(R.string.fragment_tag_query_history));
+            ft.commit();
+        }
+    }
+
     @Background
     public void getMovieListTask(String searchText) {
         Search search = restClient.getMovieList(searchText);
+        search.setSearchText(searchText);
+
+        createDBEntry(search);
+
         updateUIList(search.getResult());
     }
 
@@ -102,13 +129,34 @@ public class MainActivityFragment extends Fragment {
     public void updateUIList(Search.Result[] list) {
         adapter.clear();
 
-        if(list!= null && list.length>0) {
+        if (list != null && list.length > 0) {
             adapter.addAll(list);
-        }
-        else
-        {
+        } else {
             Toast.makeText(getActivity(), R.string.noResult,
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void createDBEntry(Search s) {
+        DaoSession daoSession = ((ExerciseApplication) getContext().getApplicationContext()).getDaoSession();
+        MovieQueryDao movieQueryDao = daoSession.getMovieQueryDao();
+        MovieResultDao movieResultDao = daoSession.getMovieResultDao();
+
+        Calendar cal = Calendar.getInstance();
+
+        MovieQuery mq = new MovieQuery();
+        mq.setSearchText(s.getSearchText());
+        mq.setSearchDate(cal.getTime());
+
+        movieQueryDao.insert(mq);
+
+        for (Search.Result i : s.getResult()) {
+            MovieResult mr = new MovieResult();
+            mr.setTitle(i.getTitle());
+            mr.setMovieQuery(mq);
+            movieResultDao.insert(mr);
+            mq.getMovieResultList().add(mr);
+            mq.update();
         }
     }
 }

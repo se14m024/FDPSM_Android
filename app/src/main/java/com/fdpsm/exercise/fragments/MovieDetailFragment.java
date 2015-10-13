@@ -6,8 +6,12 @@ import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fdpsm.exercise.ExerciseApplication;
 import com.fdpsm.exercise.MovieRestClient;
 import com.fdpsm.exercise.R;
+import com.fdpsm.exercise.dao.DaoSession;
+import com.fdpsm.exercise.dao.MovieDetail;
+import com.fdpsm.exercise.dao.MovieDetailDao;
 import com.fdpsm.exercise.model.Movie;
 
 import org.androidannotations.annotations.AfterViews;
@@ -45,8 +49,7 @@ public class MovieDetailFragment extends Fragment {
     }
 
     @AfterViews
-    public void init()
-    {
+    public void init() {
         String item = getArguments().getString("item");
         System.out.println("detailed info for:" + item);
 
@@ -54,9 +57,11 @@ public class MovieDetailFragment extends Fragment {
     }
 
     @Background
-    public void getMovieDetailTask(String item)
-    {
+    public void getMovieDetailTask(String item) {
+
         Movie movie = restClient.getMovieDetail(item);
+
+        createDBEntry(movie);
 
         if (movie != null) {
             if (!movie.getPosterUrl().equalsIgnoreCase("N/A")) {
@@ -68,8 +73,7 @@ public class MovieDetailFragment extends Fragment {
     }
 
     @UiThread
-    public void updateUIDetail(Movie movie)
-    {
+    public void updateUIDetail(Movie movie) {
         title.setText(movie.getTitle());
         release.setText(movie.getReleaseDate());
         runtime.setText(movie.getRuntime());
@@ -93,4 +97,19 @@ public class MovieDetailFragment extends Fragment {
         }
         return bitmap;
     }
+
+
+    private void createDBEntry(Movie m) {
+        DaoSession daoSession = ((ExerciseApplication) getContext().getApplicationContext()).getDaoSession();
+        MovieDetailDao movieDetailDao = daoSession.getMovieDetailDao();
+
+        MovieDetail md = new MovieDetail();
+        md.setTitle(m.getTitle());
+        md.setReleaseDate(m.getReleaseDate());
+        md.setRuntime(m.getRuntime());
+        md.setPosterUrl(m.getPosterUrl());
+
+        movieDetailDao.insertOrReplace(md);
+    }
+
 }

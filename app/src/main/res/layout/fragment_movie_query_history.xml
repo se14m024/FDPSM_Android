@@ -7,25 +7,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:weightSum="1"
-    tools:context=".MainActivityFragment_">
+    android:weightSum="1">
 
-    <EditText
-        android:id="@+id/searchText"
+    <TextView
+        android:id="@+id/headlineHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search"
-        android:imeOptions="actionSearch"
-        android:inputType="text" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/historyButton"
-        android:text="@string/searchHistory" />
+        android:gravity="center"
+        android:text="@string/historyQueries" />
 
     <ListView
-        android:id="@+id/listMovies"
+        android:id="@+id/queryList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

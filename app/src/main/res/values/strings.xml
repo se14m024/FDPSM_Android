@@ -9,15 +9,21 @@
     <string name="runtime">Runtime:</string>
     <string name="poster">Poster:</string>
     <string name="search">Search a Movie</string>
+    <string name="searchHistory">Search - History</string>
+    <string name="historyQueries">Search - History:</string>
 
 
     // error messages
     <string name="emptySearch">Please enter a Movie title!</string>
     <string name="noResult">No result for that search!</string>
+    <string name="noHistory">No history cached!</string>
+    <string name="noHistoryResult">No cached results for the query!</string>
     <string name="shortSearch">Search must contain more than 1 character!</string>
 
     // fragment tags
     <string name="fragment_tag_list">list</string>
     <string name="fragment_tag_detail">detail</string>
+    <string name="fragment_tag_query_history">history</string>
+    <string name="fragment_tag_query_result">history_result</string>
 
 </resources>
