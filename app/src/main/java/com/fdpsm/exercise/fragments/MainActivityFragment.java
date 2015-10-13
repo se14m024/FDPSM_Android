@@ -59,7 +59,6 @@ public class MainActivityFragment extends Fragment {
 
     @ItemClick(R.id.listMovies)
     public void movieItemClicked(Search.Result item) {
-        System.out.println("clicked: " + item.getTitle());
 
         MovieDetailFragment_ fragment = (MovieDetailFragment_) getFragmentManager().findFragmentByTag(getString(R.string.fragment_tag_detail));
         if (fragment == null || !fragment.isInLayout()) {
@@ -82,7 +81,6 @@ public class MainActivityFragment extends Fragment {
             String text = String.valueOf(searchText.getText());
 
             if (!text.isEmpty() && text.length() > 1) {
-                System.out.println("searching: " + text);
 
                 getMovieListTask(text);
 
@@ -150,13 +148,16 @@ public class MainActivityFragment extends Fragment {
 
         movieQueryDao.insert(mq);
 
-        for (Search.Result i : s.getResult()) {
-            MovieResult mr = new MovieResult();
-            mr.setTitle(i.getTitle());
-            mr.setMovieQuery(mq);
-            movieResultDao.insert(mr);
-            mq.getMovieResultList().add(mr);
-            mq.update();
+        // query with no result
+        if (s.getResult() != null && s.getResult().length > 0) {
+            for (Search.Result i : s.getResult()) {
+                MovieResult mr = new MovieResult();
+                mr.setTitle(i.getTitle());
+                mr.setMovieQuery(mq);
+                movieResultDao.insert(mr);
+                mq.getMovieResultList().add(mr);
+                mq.update();
+            }
         }
     }
 }

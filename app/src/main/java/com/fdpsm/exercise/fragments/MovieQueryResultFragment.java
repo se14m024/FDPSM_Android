@@ -41,7 +41,6 @@ public class MovieQueryResultFragment extends Fragment {
     public void init() {
         String id = getArguments().getString("id");
         String text = getArguments().getString("text");
-        System.out.println("result fragment id: " + id + " text: " + text);
 
         headlineResultQuery.setText("Result for Query: " + text);
 

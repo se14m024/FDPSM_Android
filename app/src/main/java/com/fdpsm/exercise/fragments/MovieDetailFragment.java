@@ -51,8 +51,6 @@ public class MovieDetailFragment extends Fragment {
     @AfterViews
     public void init() {
         String item = getArguments().getString("item");
-        System.out.println("detailed info for:" + item);
-
         this.getMovieDetailTask(item);
     }
 

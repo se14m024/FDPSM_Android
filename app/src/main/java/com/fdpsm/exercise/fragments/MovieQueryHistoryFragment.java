@@ -37,8 +37,6 @@ public class MovieQueryHistoryFragment extends Fragment {
 
     @AfterViews
     public void init() {
-        System.out.println("history fragment");
-
         adapter = new ArrayAdapter<MovieQuery>(getActivity(),
                 android.R.layout.simple_list_item_1, new ArrayList<MovieQuery>());
         queryList.setAdapter(adapter);
@@ -72,7 +70,6 @@ public class MovieQueryHistoryFragment extends Fragment {
 
     @ItemClick(R.id.queryList)
     public void historyItemClicked(MovieQuery item) {
-        System.out.println("clicked: " + item.getSearchText());
 
         MovieQueryResultFragment_ fragment = (MovieQueryResultFragment_) getFragmentManager().findFragmentByTag(getString(R.string.fragment_tag_query_result));
         if (fragment == null || !fragment.isInLayout()) {
